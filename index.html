@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Journal & Bloc-Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f0f4f8;
+      --card-bg: #ffffff;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 550px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(148, 163, 184, 0.15);
+      padding: 32px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 18px;
+    }
+
+    .date-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 16px;
+    }
+
+    .date-nav button {
+      background: #ffffff;
+      color: var(--text-dark);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .date-nav button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .date-display {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 1rem;
+      text-transform: capitalize;
+    }
+
+    .input-section {
+      display: flex;
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input[type="text"]::placeholder {
+      color: #94a3b8;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .add-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s ease;
+    }
+
+    .add-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    li {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 14px 18px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    li:hover {
+      border-color: #cbd5e1;
+    }
+
+    li.completed {
+      background: #f8fafc;
+    }
+
+    li.completed span {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    .task-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #cbd5e1;
+      border-radius: 7px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .delete-btn {
+      background: #fef2f2;
+      color: var(--danger);
+      border: 1px solid #fee2e2;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .delete-btn:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 30px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Mon Bloc-Notes</h1>
+    <div class="date-nav">
+      <button onclick="changeDate(-1)">&larr; Précédent</button>
+      <span class="date-display" id="dateDisplay"></span>
+      <button onclick="changeDate(1)">Suivant &rarr;</button>
+    </div>
+  </header>
+
+  <div class="input-section">
+    <input type="text" id="taskInput" placeholder="Ajouter une tâche pour cette journée..." onkeypress="handleKeyPress(event)">
+    <button class="add-btn" onclick="addTask()">Ajouter</button>
+  </div>
+
+  <ul id="taskList"></ul>
+  <p id="emptyMsg" class="empty-msg" style="display: none;">Aucune tâche enregistrée pour ce jour.</p>
+</div>
+
+<script>
+  let currentDate = new Date();
+
+  function formatDateKey(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function renderDate() {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('dateDisplay').textContent = currentDate.toLocaleDateString('fr-FR', options);
+    loadTasks();
+  }
+
+  function changeDate(days) {
+    currentDate.setDate(currentDate.getDate() + days);
+    renderDate();
+  }
+
+  function getTasksForCurrentDate() {
+    const key = `tasks_${formatDateKey(currentDate)}`;
+    return JSON.parse(localStorage.getItem(key)) || [];
+  }
+
+  function saveTasks(tasks) {
+    const key = `tasks_${formatDateKey(currentDate)}`;
+    localStorage.setItem(key, JSON.stringify(tasks));
+  }
+
+  function loadTasks() {
+    const tasks = getTasksForCurrentDate();
+    const list = document.getElementById('taskList');
+    const emptyMsg = document.getElementById('emptyMsg');
+    list.innerHTML = '';
+
+    if (tasks.length === 0) {
+      emptyMsg.style.display = 'block';
+      return;
+    }
+
+    emptyMsg.style.display = 'none';
+
+    tasks.forEach((task, index) => {
+      const li = document.createElement('li');
+      if (task.completed) li.classList.add('completed');
+
+      li.innerHTML = `
+        <div class="task-content">
+          <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+          <span>${escapeHtml(task.text)}</span>
+        </div>
+        <button class="delete-btn" onclick="deleteTask(${index})">Supprimer</button>
+      `;
+
+      list.appendChild(li);
+    });
+  }
+
+  function addTask() {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+
+    if (text === '') return;
+
+    const tasks = getTasksForCurrentDate();
+    tasks.push({ text: text, completed: false });
+    saveTasks(tasks);
+
+    input.value = '';
+    loadTasks();
+  }
+
+  function toggleTask(index) {
+    const tasks = getTasksForCurrentDate();
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks(tasks);
+    loadTasks();
+  }
+
+  function deleteTask(index) {
+    const tasks = getTasksForCurrentDate();
+    tasks.splice(index, 1);
+    saveTasks(tasks);
+    loadTasks();
+  }
+
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  renderDate();
+</script>
+
+</body>
+</html>
